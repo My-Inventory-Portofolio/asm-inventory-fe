@@ -1,0 +1,6 @@
+.background {
+  background-image: url("https://www.sampurna-group.com/assets/img/mural-perjalanan-pt-alam-sampurna-makmur.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Adjust height as needed */
+}
