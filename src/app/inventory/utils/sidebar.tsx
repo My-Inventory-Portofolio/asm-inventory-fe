@@ -1,4 +1,3 @@
-import React from "react"
 import { Sidebar } from "primereact/sidebar"
 import { Button } from "primereact/button"
 import { Avatar } from "primereact/avatar"
