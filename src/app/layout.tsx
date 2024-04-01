@@ -5,14 +5,11 @@ import "primeflex/primeflex.css"
 import "../styles/globals.css"
 import type { Metadata } from "next"
 import { PrimeReactProvider } from "primereact/api"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 export const metadata: Metadata = {
   title: "ASM Inventory",
   description: "Web Inventory ASM",
 }
-
-const queryClient = new QueryClient()
 
 export default function RootLayout({
   children,
