@@ -5,12 +5,14 @@ import { Avatar } from "primereact/avatar"
 type VisibleType = {
   visible: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  activeContent: number
   setActiveContent: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function SideBar({
   visible,
   setVisible,
+  activeContent,
   setActiveContent,
 }: VisibleType) {
   const handleActiveContent = (contentNum: number) => {
@@ -55,25 +57,58 @@ export default function SideBar({
                     <li>
                       <ul className="list-none p-0 m-0 overflow-hidden">
                         <li onClick={() => handleActiveContent(0)}>
-                          <a className="p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors w-full">
+                          <a
+                            className={`p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 ${
+                              activeContent === 0
+                                ? "bg-blue-100"
+                                : "hover:surface-100"
+                            } transition-duration-150 transition-colors w-full`}
+                          >
                             <i className="pi pi-briefcase mr-2"></i>
-                            <span className="font-medium">Aset</span>
+                            <span className="font-medium">Assets</span>
                           </a>
                         </li>
-                        <li onClick={() => handleActiveContent(1)}>
-                          <a className="p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors w-full">
+                        <li
+                          onClick={() => handleActiveContent(1)}
+                          className={`${activeContent === 1 && "bg-blue-100"}`}
+                        >
+                          <a
+                            className={`p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 ${
+                              activeContent === 1
+                                ? "bg-blue-100"
+                                : "hover:surface-100"
+                            } transition-duration-150 transition-colors w-full`}
+                          >
                             <i className="pi pi-shopping-cart mr-2"></i>
                             <span className="font-medium">Pembelian</span>
                           </a>
                         </li>
-                        <li onClick={() => handleActiveContent(2)}>
-                          <a className="p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors w-full">
+                        <li
+                          onClick={() => handleActiveContent(2)}
+                          className={`${activeContent === 2 && "bg-blue-100"}`}
+                        >
+                          <a
+                            className={`p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 ${
+                              activeContent === 2
+                                ? "bg-blue-100"
+                                : "hover:surface-100"
+                            } transition-duration-150 transition-colors w-full`}
+                          >
                             <i className="pi pi-book mr-2"></i>
                             <span className="font-medium">Catatan</span>
                           </a>
                         </li>
-                        <li onClick={() => handleActiveContent(3)}>
-                          <a className="p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors w-full">
+                        <li
+                          onClick={() => handleActiveContent(3)}
+                          className={`${activeContent === 3 && "bg-blue-100"}`}
+                        >
+                          <a
+                            className={`p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 ${
+                              activeContent === 3
+                                ? "bg-blue-100"
+                                : "hover:surface-100"
+                            } transition-duration-150 transition-colors w-full`}
+                          >
                             <i className="pi pi-box mr-2"></i>
                             <span className="font-medium">Kartu Stok</span>
                           </a>
@@ -87,10 +122,10 @@ export default function SideBar({
                   <div className="flex align-items-center justify-content-between m-3">
                     <div className="flex align-items-center">
                       <Avatar
-                        image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+                        image="https://erp.sampurna-group.com/assets/layout/images/logo-white.png"
                         shape="circle"
                       />
-                      <span className="font-bold ml-2">Amy Elsner</span>
+                      <span className="font-bold ml-2">ASM</span>
                     </div>
                     <Button
                       icon="pi pi-sign-out"
