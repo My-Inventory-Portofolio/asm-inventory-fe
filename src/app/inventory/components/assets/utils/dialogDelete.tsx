@@ -1,12 +1,35 @@
 import { Button } from "primereact/button"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { deleteAssets } from "@/api/assets"
 
 type TDialogDelete = {
+  noAset: string
+  setNoAset: React.Dispatch<React.SetStateAction<string>>
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function DialogDelete({ setVisible }: TDialogDelete) {
+export default function DialogDelete({
+  noAset,
+  setNoAset,
+  setVisible,
+}: TDialogDelete) {
+  const queryClient = useQueryClient()
+
+  // post mutation function
+  const deleteAssetsMutation = useMutation({
+    mutationFn: deleteAssets,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["assets"] })
+    },
+  })
+
   const handleOnCancel = () => {
     setVisible(false)
+  }
+
+  const handleOnSubmit = () => {
+    setVisible(false)
+    deleteAssetsMutation.mutate({ no_aset: noAset })
   }
 
   return (
@@ -27,7 +50,7 @@ export default function DialogDelete({ setVisible }: TDialogDelete) {
           severity="help"
           text
           aria-label="Filter"
-          onClick={handleOnCancel}
+          onClick={handleOnSubmit}
         />
       </div>
     </div>

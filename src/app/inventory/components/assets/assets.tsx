@@ -32,6 +32,7 @@ export default function Assets() {
   const [visibleFormData, setVisibleFormData] = useState<boolean>(false)
   const [visibleDialogDelete, setVisibleDialogDelete] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>("")
+  const [tempNoAset, setTempNoAset] = useState<string>("")
   const [keywordDataLength, setKeywordDataLength] = useState(0)
   const [tableData, setTableData] = useState<TAssetData[]>([])
   const asetData: TAssetData[] | undefined = queryClient.getQueryData([
@@ -65,6 +66,7 @@ export default function Assets() {
   )
 
   const handleDeleteColumn = (e: any) => {
+    setTempNoAset(e.no_aset)
     setVisibleDialogDelete(true)
   }
 
@@ -194,7 +196,11 @@ export default function Assets() {
         visible={visibleDialogDelete}
         onHide={() => setVisibleDialogDelete(false)}
       >
-        <DialogDelete setVisible={setVisibleDialogDelete} />
+        <DialogDelete
+          noAset={tempNoAset}
+          setNoAset={setTempNoAset}
+          setVisible={setVisibleDialogDelete}
+        />
       </Dialog>
     </div>
   )
