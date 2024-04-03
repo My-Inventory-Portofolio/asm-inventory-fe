@@ -2,11 +2,11 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 // utils
-import NavBar from "../utils/navbar"
-import SideBar from "../utils/sidebar"
+import NavBar from "../../../utils/navbar"
+import SideBar from "../../../utils/sidebar"
 
 // components
-import Assets from "./assets"
+import Assets from "./assets/assets"
 import Catatan from "./catatan"
 import KartuStok from "./kartu_stok"
 import Pembelian from "./pembelian"
@@ -26,10 +26,7 @@ export default function InventoryComp() {
         className="flex justify-content-between flex-column p-5"
       >
         {/* NAVBAR  */}
-        <div
-          className="bg-white flex justify-content-start border-round-md"
-          style={{ height: "10%" }}
-        >
+        <div className="bg-white flex justify-content-start border-round-md py-3">
           <NavBar visible={visible} setVisible={setVisible} />
           {/* sidebar  */}
           <SideBar
@@ -40,10 +37,7 @@ export default function InventoryComp() {
           />
         </div>
         {/* CONTENT  */}
-        <div
-          style={{ height: "85%", width: "100%" }}
-          className="bg-white border-round-md"
-        >
+        <div className="bg-white border-round-md w-full py-3">
           {activeContent === 0 ? (
             <Assets />
           ) : activeContent === 1 ? (

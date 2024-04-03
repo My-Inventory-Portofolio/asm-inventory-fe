@@ -3,12 +3,9 @@
 import { Card } from "primereact/card"
 import Image from "next/image"
 import { InputText } from "primereact/inputtext"
-import { useState } from "react"
 import { Button } from "primereact/button"
 
 export default function Login() {
-  const [value, setValue] = useState("")
-
   return (
     <Card
       className="mx-auto my-auto shadow-8 border-round-3xl"
@@ -17,7 +14,7 @@ export default function Login() {
       <div className="flex flex-column align-items-center">
         <Image
           src="https://erp.sampurna-group.com/assets/layout/images/logo-white.png"
-          alt="Description of your image"
+          alt="ASM LOGO"
           width={70}
           height={70}
         />

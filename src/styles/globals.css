@@ -2,3 +2,22 @@ body {
   padding: 0;
   margin: 0;
 }
+
+/* scrollbar  */
+.p-datatable-wrapper::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.p-datatable-wrapper::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+
+.p-datatable-wrapper::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+.p-datatable-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

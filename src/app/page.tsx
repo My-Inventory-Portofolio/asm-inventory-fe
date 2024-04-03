@@ -1,5 +1,5 @@
 import Styles from "../styles/index.module.css"
-import Login from "./inventory/utils/login"
+import Login from "../utils/login"
 
 export default function Home() {
   return (
