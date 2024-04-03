@@ -41,12 +41,15 @@ export default function InventoryComp() {
           {activeContent === 0 ? (
             <Assets />
           ) : activeContent === 1 ? (
-            <Pembelian />
-          ) : activeContent === 2 ? (
-            <Catatan />
-          ) : activeContent === 3 ? (
-            <KartuStok />
+            <></>
+          ) : // <Pembelian />
+          activeContent === 2 ? (
+            <></>
+          ) : // <Catatan />
+          activeContent === 3 ? (
+            <></>
           ) : (
+            // <KartuStok />
             <></>
           )}
         </div>

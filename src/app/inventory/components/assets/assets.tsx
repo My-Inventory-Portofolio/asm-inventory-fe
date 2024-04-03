@@ -152,13 +152,20 @@ export default function Assets() {
         <div className="mt-2" style={{ height: "calc(100vh - 18rem)" }}>
           <DataTable value={tableData} scrollable scrollHeight="flex">
             <Column
+              key={"column-table"}
               header="No"
               body={(_, rowIndex) => <>{rowIndex.rowIndex + 1}</>}
             />
             {columnTable?.map(({ field, header }) => (
-              <Column style={{ width: "10%" }} field={field} header={header} />
+              <Column
+                key={"column-table"}
+                style={{ width: "10%" }}
+                field={field}
+                header={header}
+              />
             ))}
             <Column
+              key={"column-table"}
               body={(e) => (
                 <Button
                   size="small"
