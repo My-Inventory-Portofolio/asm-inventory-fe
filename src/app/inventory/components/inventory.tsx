@@ -1,6 +1,7 @@
 "use client"
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
 // utils
 import NavBar from "../../../utils/navbar"
 import SideBar from "../../../utils/sidebar"
@@ -11,7 +12,7 @@ import Catatan from "./catatan"
 import KartuStok from "./kartu_stok"
 import Pembelian from "./pembelian"
 
-import { useState } from "react"
+import { useState, useLayoutEffect, useEffect } from "react"
 
 const queryClient = new QueryClient()
 
