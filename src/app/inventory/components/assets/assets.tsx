@@ -11,6 +11,7 @@ import Pagination from "./utils/pagination"
 import DialogDelete from "./utils/dialogDelete"
 import SearchBar from "./utils/searchBar"
 import { InputText } from "primereact/inputtext"
+import toast from "react-hot-toast"
 
 type TAssetData = {
   keterangan: string
@@ -35,9 +36,12 @@ export default function Assets() {
   const [tempNoAset, setTempNoAset] = useState<string>("")
   const [keywordDataLength, setKeywordDataLength] = useState(0)
   const [tableData, setTableData] = useState<TAssetData[]>([])
+
+  // query
   const asetData: TAssetData[] | undefined = queryClient.getQueryData([
     "assets",
   ])
+  const users = queryClient.getQueryData(["users"])
 
   // pagination state
   const [first, setFirst] = useState(0)
@@ -84,7 +88,7 @@ export default function Assets() {
         )
         setKeywordDataLength(keywordData.length)
       } else {
-        const tempTableData = asetData.slice(
+        const tempTableData = asetData?.slice(
           first,
           first === 0 ? rows : rows * (first + 1)
         )

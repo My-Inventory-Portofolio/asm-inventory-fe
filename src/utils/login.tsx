@@ -7,7 +7,6 @@ import { Button } from "primereact/button"
 import { useState } from "react"
 import { tryLogin } from "@/api/users"
 import Cookies from "js-cookie"
-import { redirect } from "next/navigation"
 import { useRouter } from "next/navigation"
 
 export default function Login() {
@@ -20,9 +19,9 @@ export default function Login() {
     const token = res.token
     const payloadBase64 = token.split(".")[1]
     const payload = JSON.parse(atob(payloadBase64))
+    console.log(payload)
     if (payload) {
       Cookies.set("jwt", token)
-      console.log(true)
       router.push("/inventory")
     }
   }

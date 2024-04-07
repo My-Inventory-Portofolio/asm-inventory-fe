@@ -23,12 +23,14 @@
     "primereact": "^10.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-query": "^3.39.3",
     "react-transition-group": "^4.4.5",
     "typescript": "5.2.2"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

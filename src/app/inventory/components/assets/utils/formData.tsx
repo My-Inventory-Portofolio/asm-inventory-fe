@@ -2,7 +2,7 @@
 
 import { Button } from "primereact/button"
 import { InputText } from "primereact/inputtext"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { postAssets } from "@/api/assets"
 
@@ -60,7 +60,8 @@ export default function FormDataAssets({ setVisible }: TVisible) {
 
   // handle submit new todo
   const handleOnSubmit = (): void => {
-    postAssetsMutation.mutate(formData)
+    const test = postAssetsMutation.mutate(formData)
+    console.log(test, "ini test")
     resetFormData()
   }
 

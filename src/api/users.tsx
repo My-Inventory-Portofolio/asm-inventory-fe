@@ -1,4 +1,4 @@
-const url = "https://asm-inventory-be.vercel.app/users/login"
+const url = "https://yuta-inventory.vercel.app/users/login"
 
 // POST ASSET
 export const tryLogin = async (data: any) => {
