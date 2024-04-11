@@ -26,12 +26,26 @@ export default function Pagination({
   }
 
   return (
-    <Paginator
-      first={first}
-      rows={rows}
-      totalRecords={dataLength}
-      rowsPerPageOptions={[10, 20, 30]}
-      onPageChange={onPageChange}
-    />
+    <>
+      <div className="hidden md:block">
+        <Paginator
+          first={first}
+          rows={rows}
+          totalRecords={dataLength}
+          rowsPerPageOptions={[10, 20, 30]}
+          onPageChange={onPageChange}
+        />
+      </div>
+      <div className="block md:hidden">
+        <Paginator
+          template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          first={first}
+          rows={rows}
+          totalRecords={dataLength}
+          rowsPerPageOptions={[10, 20, 30]}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </>
   )
 }
