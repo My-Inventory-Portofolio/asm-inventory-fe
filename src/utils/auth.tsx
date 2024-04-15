@@ -18,6 +18,7 @@ function Auth({ children }: any) {
       const payload = JSON.parse(atob(payloadBase64))
       if (payload?.username && authorized === false) {
         queryClient.setQueryData(["users"], payload)
+        Cookies.set("username", payload.username)
         setAuthorized(true)
       }
     }

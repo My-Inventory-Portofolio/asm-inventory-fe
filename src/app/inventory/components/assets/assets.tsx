@@ -9,9 +9,7 @@ import FormDataAssets from "./utils/formData"
 import Image from "next/image"
 import Pagination from "./utils/pagination"
 import DialogDelete from "./utils/dialogDelete"
-import SearchBar from "./utils/searchBar"
 import { InputText } from "primereact/inputtext"
-import toast from "react-hot-toast"
 
 type TAssetData = {
   keterangan: string
@@ -31,6 +29,21 @@ type TAssetData = {
 export default function Assets() {
   const queryClient = useQueryClient()
   const [visibleFormData, setVisibleFormData] = useState<boolean>(false)
+  const [flagEdit, setFlagEdit] = useState(false)
+  const [tempFormData, setTempFormData] = useState({
+    no_aset: "",
+    nama_device: "",
+    spec: "",
+    merek: "",
+    variant: "",
+    model: "",
+    pic: "",
+    owner: "",
+    lokasi: "",
+    keterangan: "",
+    tgl_check: "",
+    serial_number: "",
+  })
   const [visibleDialogDelete, setVisibleDialogDelete] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>("")
   const [tempNoAset, setTempNoAset] = useState<string>("")
@@ -41,7 +54,6 @@ export default function Assets() {
   const asetData: TAssetData[] | undefined = queryClient.getQueryData([
     "assets",
   ])
-  const users = queryClient.getQueryData(["users"])
 
   // pagination state
   const [first, setFirst] = useState(0)
@@ -69,7 +81,33 @@ export default function Assets() {
     </div>
   )
 
-  const handleDeleteColumn = (e: any) => {
+  const handleResetFormData = (): void => {
+    setFlagEdit(false)
+    setTempFormData({
+      no_aset: "",
+      nama_device: "",
+      spec: "",
+      merek: "",
+      variant: "",
+      model: "",
+      pic: "",
+      owner: "",
+      lokasi: "",
+      keterangan: "",
+      tgl_check: "",
+      serial_number: "",
+    })
+  }
+
+  // handle edit btn
+  const handleEditColumn = (e: TAssetData) => {
+    setFlagEdit(true)
+    setTempFormData(e)
+    setVisibleFormData(true)
+  }
+
+  // handle delete btn
+  const handleDeleteColumn = (e: TAssetData) => {
     setTempNoAset(e.no_aset)
     setVisibleDialogDelete(true)
   }
@@ -121,7 +159,7 @@ export default function Assets() {
             Aset
           </div>
           <i
-            className="pi pi-money-bill pt-1 ml-2"
+            className="pi pi-briefcase pt-1 ml-2"
             style={{ fontSize: "1.3rem" }}
           ></i>
         </div>
@@ -175,10 +213,21 @@ export default function Assets() {
               body={(e) => (
                 <Button
                   size="small"
+                  icon="pi pi-pencil"
+                  text
+                  severity="info"
+                  onClick={() => handleEditColumn(e)}
+                />
+              )}
+            />
+            <Column
+              key={"column-table"}
+              body={(e) => (
+                <Button
+                  size="small"
                   icon="pi pi-trash"
                   text
                   severity="danger"
-                  aria-label="Cancel"
                   onClick={() => handleDeleteColumn(e)}
                 />
               )}
@@ -188,13 +237,25 @@ export default function Assets() {
       ) : (
         <></>
       )}
+
+      {/* form data  */}
       <Dialog
         header={headerFormData}
         visible={visibleFormData}
-        onHide={() => setVisibleFormData(false)}
+        onHide={() => {
+          setVisibleFormData(false)
+          handleResetFormData()
+        }}
       >
-        <FormDataAssets setVisible={setVisibleFormData} />
+        <FormDataAssets
+          setVisible={setVisibleFormData}
+          tempFormData={tempFormData}
+          flagEdit={flagEdit}
+          handleResetFormData={handleResetFormData}
+        />
       </Dialog>
+
+      {/* delete dialog  */}
       <Dialog
         header="Delete!"
         visible={visibleDialogDelete}

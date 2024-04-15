@@ -1,7 +1,7 @@
 import toast from "react-hot-toast"
 import Cookies from "js-cookie"
 
-const url = "https://yuta-inventory.vercel.app/api/assets"
+const url = "https://asm-inventory-be-phi.vercel.app/api/assets"
 const token = Cookies.get("jwt")
 
 // toast
@@ -38,6 +38,7 @@ export const postAssets = async (data: any) => {
       body: JSON.stringify(data),
     })
     const res = await response.json()
+    console.log(res, "ini res")
 
     if (!response.ok) {
       toastError(res.message)
@@ -63,6 +64,29 @@ export const deleteAssets = async (data: any) => {
     })
     const res = await response.json()
 
+    if (!response.ok) {
+      toastError(res.message)
+    } else {
+      toastSuccess(res.message)
+    }
+  } catch (error) {
+    console.log("error")
+  }
+}
+
+// EDT ASSET
+export const editAssets = async (data: any) => {
+  toastLoading()
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+    const res = await response.json()
     if (!response.ok) {
       toastError(res.message)
     } else {

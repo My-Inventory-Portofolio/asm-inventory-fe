@@ -1,6 +1,7 @@
 import { Sidebar } from "primereact/sidebar"
 import { Button } from "primereact/button"
 import { Avatar } from "primereact/avatar"
+import Cookies from "js-cookie"
 
 type VisibleType = {
   visible: boolean
@@ -19,6 +20,8 @@ export default function SideBar({
     setVisible(false)
     setActiveContent(contentNum)
   }
+
+  const username = Cookies.get("username")
 
   return (
     <div className="card flex justify-content-center">
@@ -125,7 +128,7 @@ export default function SideBar({
                         image="https://erp.sampurna-group.com/assets/layout/images/logo-white.png"
                         shape="circle"
                       />
-                      <span className="font-bold ml-2">ASM</span>
+                      <span className="font-bold ml-2">{username}</span>
                     </div>
                     <Button
                       icon="pi pi-sign-out"

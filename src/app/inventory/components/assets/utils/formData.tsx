@@ -4,50 +4,43 @@ import { Button } from "primereact/button"
 import { InputText } from "primereact/inputtext"
 import { useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { postAssets } from "@/api/assets"
+import { editAssets, postAssets } from "@/api/assets"
 
-type TVisible = {
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+type TTempFormData = {
+  keterangan: string
+  lokasi: string
+  merek: string
+  model: string
+  nama_device: string
+  no_aset: string
+  owner: string
+  pic: string
+  serial_number: string
+  spec: string
+  tgl_check: string
+  variant: string
 }
 
-export default function FormDataAssets({ setVisible }: TVisible) {
-  const queryClient = useQueryClient()
-  const [formData, setFormData] = useState({
-    no_aset: "",
-    nama_device: "",
-    spec: "",
-    merek: "",
-    variant: "",
-    model: "",
-    pic: "",
-    owner: "",
-    lokasi: "",
-    keterangan: "",
-    tgl_check: "",
-    serial_number: "",
-  })
+type TFormData = {
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  tempFormData: TTempFormData
+  flagEdit: boolean
+  handleResetFormData: () => void
+}
 
-  const resetFormData = () => {
-    setFormData({
-      no_aset: "",
-      nama_device: "",
-      spec: "",
-      merek: "",
-      variant: "",
-      model: "",
-      pic: "",
-      owner: "",
-      lokasi: "",
-      keterangan: "",
-      tgl_check: "",
-      serial_number: "",
-    })
-  }
+export default function FormDataAssets({
+  setVisible,
+  tempFormData,
+  flagEdit,
+  handleResetFormData,
+}: TFormData) {
+  const queryClient = useQueryClient()
+  const [formData, setFormData] = useState(tempFormData)
 
   // handle on close
-  const handleOnClose = () => {
+  const handleOnClose = (): void => {
     setVisible(false)
-    resetFormData()
+    handleResetFormData()
   }
 
   // post mutation function
@@ -58,15 +51,27 @@ export default function FormDataAssets({ setVisible }: TVisible) {
     },
   })
 
+  // edit mutation function
+  const editAssetsMutation = useMutation({
+    mutationFn: editAssets,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["assets"] })
+    },
+  })
+
   // handle submit new todo
   const handleOnSubmit = (): void => {
-    const test = postAssetsMutation.mutate(formData)
-    console.log(test, "ini test")
-    resetFormData()
+    if (flagEdit) {
+      editAssetsMutation.mutate(formData)
+      setVisible(false)
+    } else if (flagEdit === false) {
+      postAssetsMutation.mutate(formData)
+    }
+    handleResetFormData()
   }
 
   // handle on change
-  const handleOnChange = (e: any) => {
+  const handleOnChange = (e: any): void => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
   }
@@ -85,6 +90,7 @@ export default function FormDataAssets({ setVisible }: TVisible) {
               name="no_aset"
               type="text"
               className="p-inputtext-sm mt-1 w-full w-full"
+              disabled={flagEdit}
               onChange={(e) => handleOnChange(e)}
             />
           </div>
