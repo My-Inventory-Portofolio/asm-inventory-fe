@@ -194,7 +194,12 @@ export default function Assets() {
       </div>
       {tableData ? (
         <div className="mt-2" style={{ height: "calc(100vh - 18rem)" }}>
-          <DataTable value={tableData} scrollable scrollHeight="flex">
+          <DataTable
+            value={tableData}
+            removableSort
+            scrollable
+            scrollHeight="flex"
+          >
             <Column
               key={"column-table"}
               header="No"
@@ -204,6 +209,7 @@ export default function Assets() {
               <Column
                 key={"column-table"}
                 style={{ width: "10%" }}
+                sortable
                 field={field}
                 header={header}
               />

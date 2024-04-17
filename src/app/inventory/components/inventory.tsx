@@ -9,9 +9,9 @@ import SideBar from "../../../utils/sidebar"
 
 // components
 import Assets from "./assets/assets"
+import Pembelian from "./pembelian/pembelian"
 import Catatan from "./catatan"
 import KartuStok from "./kartu_stok"
-import Pembelian from "./pembelian"
 
 import { useState, useLayoutEffect, useEffect } from "react"
 import Auth from "@/utils/auth"
@@ -27,7 +27,7 @@ export default function InventoryComp() {
       <Auth>
         <div
           style={{ backgroundColor: "#eff3f8", height: "100vh" }}
-          className="flex justify-content-between flex-column p-5"
+          className="flex flex-column p-5"
         >
           {/* NAVBAR  */}
           <div className="bg-white flex justify-content-start border-round-md py-3">
@@ -41,12 +41,12 @@ export default function InventoryComp() {
             />
           </div>
           {/* CONTENT  */}
-          <div className="bg-white border-round-md w-full py-3">
+          <div className="bg-white border-round-md w-full py-2 mt-5 h-full">
             {activeContent === 0 ? (
               <Assets />
             ) : activeContent === 1 ? (
-              <></>
-            ) : // <Pembelian />
+              <Pembelian />
+            ) : //
             activeContent === 2 ? (
               <></>
             ) : // <Catatan />

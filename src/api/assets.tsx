@@ -1,7 +1,7 @@
 import toast from "react-hot-toast"
 import Cookies from "js-cookie"
 
-const url = "https://asm-inventory-be-phi.vercel.app/api/assets"
+const url = "https://asm-inventory-be-phi.vercel.app/api/assets" // prod
 const token = Cookies.get("jwt")
 
 // toast
