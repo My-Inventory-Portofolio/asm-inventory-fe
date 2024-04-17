@@ -1,4 +1,4 @@
-const url = "https://yuta-inventory.vercel.app/api/pembelian" // prod
+const url = "https://asm-inventory-be-phi.vercel.app/api/pembelian" // prod
 // const url = "http://localhost:8080/api/pembelian" // develop
 
 export const getAllDataPembelian = async () => {
