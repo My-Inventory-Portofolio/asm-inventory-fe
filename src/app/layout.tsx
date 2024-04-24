@@ -7,8 +7,8 @@ import type { Metadata } from "next"
 import { PrimeReactProvider } from "primereact/api"
 
 export const metadata: Metadata = {
-  title: "Yuta Inventory",
-  description: "Web Inventory develop by Yuta4u",
+  title: "ASM Inventory",
+  description: "Web Inventory develop by Team Magang",
 }
 
 export default function RootLayout({
