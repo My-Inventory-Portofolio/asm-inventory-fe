@@ -7,6 +7,9 @@ import { Button } from "primereact/button"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import formatRupiah from "@/reusable/formatRupiah"
+import { Dialog } from "primereact/dialog"
+import Image from "next/image"
+import { FormDataPembelian } from "./utils/formData"
 
 type TPembelianData = {
   kode: string
@@ -16,15 +19,29 @@ type TPembelianData = {
   supplier: string
   serial_number: string
   keterangan: string
-  img_url: string
+  nota: string
 }
 
 export default function Pembelian() {
   const queryClient = useQueryClient()
   const [visibleFormData, setVisibleFormData] = useState<boolean>(false)
+  const [visibleImageDialog, setVisibleImageDialog] = useState<boolean>(false)
+  const [tempImg, setTempImg] = useState<string>("")
+  const [flagEdit, setFlagEdit] = useState<boolean>(false)
   const [keywordDataLength, setKeywordDataLength] = useState(0)
   const [keyword, setKeyword] = useState<string>("")
   const [tableData, setTableData] = useState<TPembelianData[]>([])
+
+  const [tempFormData, setTempFormData] = useState<TPembelianData>({
+    kode: "",
+    jenis: "",
+    tgl_beli: "",
+    harga_beli: "",
+    supplier: "",
+    serial_number: "",
+    keterangan: "",
+    nota: "",
+  })
 
   // pagination state
   const [first, setFirst] = useState(0)
@@ -42,6 +59,20 @@ export default function Pembelian() {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
   })
+
+  // form data header
+  const headerFormData = (
+    <div className="flex align-items-center">
+      New Pembelian
+      <Image
+        src="https://erp.sampurna-group.com/assets/layout/images/logo-white.png"
+        alt="ASM Logo"
+        width={30}
+        height={30}
+        className="ml-2"
+      />
+    </div>
+  )
 
   useEffect(() => {
     if (pembelianData) {
@@ -75,7 +106,7 @@ export default function Pembelian() {
     { field: "supplier", header: "Supplier" },
     { field: "serial_number", header: "Serial Number" },
     { field: "keterangan", header: "Keterangan" },
-    { field: "img_url", header: "Image" },
+    { field: "nota", header: "Nota" },
   ]
 
   return (
@@ -138,13 +169,25 @@ export default function Pembelian() {
                 field={field}
                 header={header}
                 sortable
-                body={(e) =>
-                  field === "harga_beli" ? (
-                    <>{formatRupiah(e[`${field}`])}</>
-                  ) : (
-                    <>{e[`${field}`]}</>
-                  )
-                }
+                body={(e) => {
+                  console.log(e, "ini e")
+                  if (field === "harga_beli") {
+                    return <>{formatRupiah(e[`${field}`])}</>
+                  } else if (field === "nota") {
+                    return (
+                      <Button
+                        label={e.nota}
+                        link
+                        onClick={() => {
+                          setVisibleImageDialog(true)
+                          setTempImg(e.nota)
+                        }}
+                      />
+                    )
+                  } else {
+                    return <>{e[`${field}`]}</>
+                  }
+                }}
               />
             ))}
             <Column
@@ -155,7 +198,7 @@ export default function Pembelian() {
                   icon="pi pi-pencil"
                   text
                   severity="info"
-                  //   onClick={() => handleEditColumn(e)}
+                  // onClick={() => handleEditColumn(e)}
                 />
               )}
             />
@@ -176,6 +219,35 @@ export default function Pembelian() {
       ) : (
         <></>
       )}
+      <Dialog
+        header={headerFormData}
+        visible={visibleFormData}
+        onHide={() => {
+          setVisibleFormData(false)
+        }}
+      >
+        <FormDataPembelian
+          setVisible={setVisibleFormData}
+          tempFormData={tempFormData}
+          flagEdit={flagEdit}
+        />
+      </Dialog>
+      <Dialog
+        header="Image View"
+        visible={visibleImageDialog}
+        onHide={() => setVisibleImageDialog(false)}
+      >
+        <div
+          className="flex align-items-center relative"
+          style={{ height: "500px", width: "700px" }}
+        >
+          <img
+            alt={"img-viewer"}
+            src={`https://storage-api.online/img/public/images/${tempImg}`}
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          />
+        </div>
+      </Dialog>
     </div>
   )
 }

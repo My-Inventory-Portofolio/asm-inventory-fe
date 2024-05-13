@@ -67,7 +67,9 @@ export default function FormDataAssets({
     } else if (flagEdit === false) {
       postAssetsMutation.mutate(formData)
     }
+    // hnalde reset
     handleResetFormData()
+    setFormData(tempFormData)
   }
 
   // handle on change
@@ -146,7 +148,6 @@ export default function FormDataAssets({
           </div>
         </div>
 
-        {/* ===  */}
         <div className="flex flex-column gap-2 w-6">
           <div>
             <label>PIC</label>

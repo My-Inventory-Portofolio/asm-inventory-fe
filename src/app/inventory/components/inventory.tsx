@@ -48,7 +48,7 @@ export default function InventoryComp() {
               <Pembelian />
             ) : //
             activeContent === 2 ? (
-              <></>
+              <Catatan />
             ) : // <Catatan />
             activeContent === 3 ? (
               <></>
