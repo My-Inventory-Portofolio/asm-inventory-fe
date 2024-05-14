@@ -110,7 +110,7 @@ export const postPembelian = async (data: any) => {
 
     // delete unnecesarry properties
     delete newPembelian.file
-    if (newPembelian) {
+    if (newPembelian && newPembelian.nota !== "") {
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -126,7 +126,7 @@ export const postPembelian = async (data: any) => {
         toastSuccess(res.message)
       }
     } else {
-      toastError("error while hit api")
+      toastError("gagal membuat data pembelian")
     }
   } catch (err) {
     return err
