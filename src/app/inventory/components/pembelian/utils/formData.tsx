@@ -8,6 +8,7 @@ import { postPembelian } from "@/api/pembelian"
 import { Tooltip } from "primereact/tooltip"
 import ErrorComp from "./errorComp"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { InputMask } from "primereact/inputmask"
 
 type TTempFormData = {
   kode: string
@@ -38,7 +39,6 @@ export function FormDataPembelian({
     image: false,
   })
   const queryClient = useQueryClient()
-
   // post mutation function
   const postPembelianMutation = useMutation({
     mutationFn: postPembelian,
@@ -73,17 +73,18 @@ export function FormDataPembelian({
     }
 
     if (flag) {
-      console.log(newErrMsg)
       setErrMsg(newErrMsg)
     } else {
-      postPembelianMutation.mutate({ ...formData, ["file"]: tempFile })
+      postPembelianMutation.mutate({
+        ...formData,
+        ["file"]: tempFile,
+      })
       setVisible(false)
-      // postPembelian({ ...formData, ["file"]: tempFile })
     }
   }
 
-  const handleOnClose = (e: any) => {
-    console.log("handle on close")
+  const handleOnClose = () => {
+    setVisible(false)
   }
 
   const onTemplateRemove = (file: File, callback: Function) => {
@@ -179,14 +180,14 @@ export function FormDataPembelian({
           </div>
           <div className="col-6">
             <label>Tanggal Beli</label>
-            <InputText
-              placeholder="dd/mm/yy"
-              value={formData.tgl_beli}
-              name="tgl_beli"
-              type="text"
+            <InputMask
               className="p-inputtext-sm mt-1 w-full"
-              disabled={flagEdit}
-              onChange={(e) => handleOnChange(e)}
+              name="tgl_beli"
+              value={formData.tgl_beli}
+              onChange={(e: any) => handleOnChange(e)}
+              mask="99/99/99"
+              placeholder="dd/mm/yy"
+              slotChar="dd/mm/yy"
             />
           </div>
           <div className="col-6">

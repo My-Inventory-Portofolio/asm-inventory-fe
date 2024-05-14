@@ -16,13 +16,14 @@ export default function Login() {
 
   const handleSubmit = async () => {
     const res = await tryLogin({ username, password })
-    const token = res.token
-    const payloadBase64 = token.split(".")[1]
-    const payload = JSON.parse(atob(payloadBase64))
-    console.log(payload)
-    if (payload) {
-      Cookies.set("jwt", token)
-      router.push("/inventory")
+    if (res) {
+      const token = res.token
+      const payloadBase64 = token.split(".")[1]
+      const payload = JSON.parse(atob(payloadBase64))
+      if (payload) {
+        Cookies.set("jwt", token)
+        router.push("/inventory")
+      }
     }
   }
 

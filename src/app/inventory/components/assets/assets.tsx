@@ -50,10 +50,6 @@ export default function Assets() {
   const [keywordDataLength, setKeywordDataLength] = useState(0)
   const [tableData, setTableData] = useState<TAssetData[]>([])
 
-  useEffect(() => {
-    console.log(flagEdit)
-  }, [flagEdit])
-
   // query
   const asetData: TAssetData[] | undefined = queryClient.getQueryData([
     "assets",

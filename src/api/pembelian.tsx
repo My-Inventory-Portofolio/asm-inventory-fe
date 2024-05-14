@@ -5,6 +5,7 @@ const url = "https://asm-inventory-be-phi.vercel.app/api/pembelian" // prod
 // const url = "http://localhost:8080/api/pembelian" // develop
 
 const token = Cookies.get("jwt")
+const role = Cookies.get("role")
 
 // toast
 const toastLoading = () => toast("Loading...")
@@ -40,54 +41,92 @@ async function uploadImage(imageData: any) {
 
     // Ambil URL gambar dari respons
     const imageUrl = await response.json()
-    return imageUrl.data.foto
+    return `${imageUrl.data.foto}|${imageUrl.data.id}`
   } catch (error) {
     console.error("Error saat mengunggah gambar:", error)
     throw error
   }
 }
 
+async function deleteImage(id: string) {
+  try {
+    const response = await fetch(
+      "https://storage-api.online/img/public/api/data/delete/" + id,
+      {
+        method: "DELETE",
+      }
+    )
+  } catch (error) {
+    toastError("Gagal delete image")
+  }
+}
+
+export const deletePembelian = async (data: any) => {
+  toastLoading()
+  try {
+    if (role === "admin") {
+      const tryDeleteImage = await deleteImage(data.imgId)
+    }
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify({ kode: data.kode }),
+    })
+    const res = await response.json()
+
+    if (!response.ok) {
+      toastError(res.message)
+    } else {
+      toastSuccess(res.message)
+    }
+  } catch (error) {
+    console.log("error")
+  }
+}
+
 export const postPembelian = async (data: any) => {
   toastLoading()
-
   try {
-    // upload gambar
-    const imageData = new FormData()
-    imageData.append("data_id", data.kode)
-    imageData.append("foto", data.file)
-    const imageUrl = await uploadImage(imageData)
+    let imgStr = ""
+    // handle upload image
+    if (role === "admin") {
+      const imageData = new FormData()
+      imageData.append("data_id", data.kode)
+      imageData.append("foto", data.file)
+      const imageUrl = await uploadImage(imageData)
+      if (imageUrl) {
+        imgStr += imageUrl
+      }
+    }
 
-    if (imageUrl) {
-      try {
-        let newPembelian = {
-          ...data,
-          nota: `${imageUrl}`,
-          harga_beli: Number(data.harga_beli),
-        }
-        delete newPembelian.file
-        if (newPembelian) {
-          const response = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token}`,
-            },
-            body: JSON.stringify(newPembelian),
-          })
-          const res = await response.json()
-          if (!response.ok) {
-            toastError(res.message)
-          } else {
-            toastSuccess(res.message)
-          }
-        } else {
-          toastError("error while hit api")
-        }
-      } catch (err) {
-        console.log(err)
+    // post
+    let newPembelian = {
+      ...data,
+      nota: imgStr,
+    }
+
+    // delete unnecesarry properties
+    delete newPembelian.file
+    if (newPembelian) {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify(newPembelian),
+      })
+      const res = await response.json()
+      if (!response.ok) {
+        toastError(res.message)
+      } else {
+        toastSuccess(res.message)
       }
     } else {
-      console.log("gagal post image")
+      toastError("error while hit api")
     }
   } catch (err) {
     return err

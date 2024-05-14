@@ -10,6 +10,7 @@ import formatRupiah from "@/reusable/formatRupiah"
 import { Dialog } from "primereact/dialog"
 import Image from "next/image"
 import { FormDataPembelian } from "./utils/formData"
+import DialogDelete from "./utils/dialogDelete"
 
 type TPembelianData = {
   kode: string
@@ -22,10 +23,26 @@ type TPembelianData = {
   nota: string
 }
 
+type TUsers = {
+  exp: number
+  lat: number
+  role: string
+  username: string
+}
+
 export default function Pembelian() {
   const queryClient = useQueryClient()
+
+  // form data dialog state
   const [visibleFormData, setVisibleFormData] = useState<boolean>(false)
+
+  // image dialog state
   const [visibleImageDialog, setVisibleImageDialog] = useState<boolean>(false)
+
+  // delete dialog state
+  const [visibleDialogDelete, setVisibleDialogDelete] = useState<boolean>(false)
+
+  const [selectedData, setSelectedData] = useState<TPembelianData>()
   const [tempImg, setTempImg] = useState<string>("")
   const [flagEdit, setFlagEdit] = useState<boolean>(false)
   const [keywordDataLength, setKeywordDataLength] = useState(0)
@@ -73,6 +90,12 @@ export default function Pembelian() {
       />
     </div>
   )
+
+  // handle delete btn
+  const handleDeleteColumn = (e: TPembelianData) => {
+    setSelectedData(e)
+    setVisibleDialogDelete(true)
+  }
 
   useEffect(() => {
     if (pembelianData) {
@@ -170,17 +193,16 @@ export default function Pembelian() {
                 header={header}
                 sortable
                 body={(e) => {
-                  console.log(e, "ini e")
                   if (field === "harga_beli") {
                     return <>{formatRupiah(e[`${field}`])}</>
                   } else if (field === "nota") {
                     return (
                       <Button
-                        label={e.nota}
+                        label={e.nota.split("|")[0]}
                         link
                         onClick={() => {
                           setVisibleImageDialog(true)
-                          setTempImg(e.nota)
+                          setTempImg(e.nota.split("|")[0])
                         }}
                       />
                     )
@@ -210,7 +232,7 @@ export default function Pembelian() {
                   icon="pi pi-trash"
                   text
                   severity="danger"
-                  //   onClick={() => handleDeleteColumn(e)}
+                  onClick={() => handleDeleteColumn(e)}
                 />
               )}
             />
@@ -247,6 +269,17 @@ export default function Pembelian() {
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
           />
         </div>
+      </Dialog>
+      {/* delete dialog  */}
+      <Dialog
+        header="Delete!"
+        visible={visibleDialogDelete}
+        onHide={() => setVisibleDialogDelete(false)}
+      >
+        <DialogDelete
+          setVisible={setVisibleDialogDelete}
+          selectedData={selectedData}
+        />
       </Dialog>
     </div>
   )

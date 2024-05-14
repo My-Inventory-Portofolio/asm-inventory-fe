@@ -19,6 +19,7 @@ function Auth({ children }: any) {
       if (payload?.username && authorized === false) {
         queryClient.setQueryData(["users"], payload)
         Cookies.set("username", payload.username)
+        Cookies.set("role", payload.role)
         setAuthorized(true)
       }
     }
