@@ -100,6 +100,8 @@ export const postPembelian = async (data: any) => {
       if (imageUrl) {
         imgStr += imageUrl
       }
+    } else {
+      imgStr += "-"
     }
 
     // post
@@ -110,7 +112,7 @@ export const postPembelian = async (data: any) => {
 
     // delete unnecesarry properties
     delete newPembelian.file
-    if (newPembelian && newPembelian.nota !== "") {
+    if (newPembelian.nota !== "") {
       const response = await fetch(url, {
         method: "POST",
         headers: {
