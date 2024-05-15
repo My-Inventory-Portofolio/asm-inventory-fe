@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import styles from "./BackgroundChanger.module.css"
 
 const backgrounds = [
-  "https://sampurna-group.com/assets/img/pasir-abu-sampurna-group.jpg",
-  "https://sampurna-group.com/assets/img/kantor-pusat-sampurna-group-kadu-sirung-tangerang.jpg",
-  "https://sampurna-group.com/assets/img/wingbox-sampurna-group.jpg",
-  // Tambahkan path gambar lainnya
+  "https://www.sampurna-group.com/assets/img/logo-pt-alam-sampurna-makmur.jpg",
+  "https://sampurna-group.com/assets/img/dumptruck-di-pool-rumpin-nca.jpg",
+  "https://www.sampurna-group.com/assets/img/logo-pt-sampurna-makmur-sejahtera.jpg",
+  "https://sampurna-group.com/assets/img/dumptruck-di-pool-rumpin-pt-niaga-citra-abadi.jpg",
 ]
 
 const variants = {

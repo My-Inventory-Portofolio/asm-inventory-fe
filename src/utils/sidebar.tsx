@@ -32,7 +32,8 @@ export default function SideBar({
           <div className="min-h-screen flex relative lg:static surface-ground">
             <div
               id="app-sidebar-2"
-              className="surface-section h-screen hidden lg:block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none"
+              // className="surface-section h-screen hidden lg:block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none"
+              className="surface-section h-screen lg:block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none"
               style={{ width: "100%" }}
             >
               <div className="flex flex-column h-full">

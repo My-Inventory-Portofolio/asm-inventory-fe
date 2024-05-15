@@ -8,6 +8,7 @@ import { useState } from "react"
 import { tryLogin } from "@/api/users"
 import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
+import "../styles/index.module.css"
 
 export default function Login() {
   const [username, setUsername] = useState("")
@@ -29,15 +30,14 @@ export default function Login() {
 
   return (
     <Card
-      className="shadow-8 border-round-3xl shadow-5"
+      className="shadow-8 border-round-3xl boxed-content"
       style={{
         height: "350px",
         width: "350px",
         background: "rgba(0,0,0,0.5)",
-        border: "2px solid white",
       }}
     >
-      <div className="flex flex-column align-items-center">
+      <div className="flex flex-column align-items-center img-wrap">
         <Image
           src="https://erp.sampurna-group.com/assets/layout/images/logo-white.png"
           alt="ASM LOGO"

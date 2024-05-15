@@ -39,3 +39,27 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.boxed-content {
+  position: relative;
+  padding: 10px; /* Jarak di dalam border */
+}
+.boxed-content::after {
+  content: "";
+  position: absolute;
+  top: -12px; /* Jarak di atas sedikit lebih besar untuk efek border */
+  left: -12px; /* Jarak di kiri sedikit lebih besar untuk efek border */
+  right: -12px; /* Jarak di kanan sedikit lebih besar untuk efek border */
+  bottom: -12px; /* Jarak di bawah sedikit lebih besar untuk efek border */
+  border-radius: 1.5rem;
+  border: 5px solid transparent; /* Border transparan */
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.037),
+      rgba(255, 255, 255, 0.324)
+    ),
+    /* linear-gradient(45deg, #ff0000, #0000ff); Gradasi warna */
+      linear-gradient(45deg, #51515251, #2e2e2ffd);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  z-index: -2; /* Membuat pseudo-element berada di belakang semua */
+}
