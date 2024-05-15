@@ -10,7 +10,7 @@ import SideBar from "../../../utils/sidebar"
 // components
 import Assets from "./assets/assets"
 import Pembelian from "./pembelian/pembelian"
-import Catatan from "./catatan"
+import Catatan from "./catatan/catatan"
 import KartuStok from "./kartu_stok"
 
 import { useState, useLayoutEffect, useEffect } from "react"
@@ -58,7 +58,6 @@ export default function InventoryComp() {
             )}
           </div>
         </div>
-        <Toaster />
       </Auth>
     </QueryClientProvider>
   )

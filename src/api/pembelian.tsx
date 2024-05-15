@@ -8,7 +8,10 @@ const token = Cookies.get("jwt")
 const role = Cookies.get("role")
 
 // toast
-const toastLoading = () => toast("Loading...")
+const toastLoading = () =>
+  toast("Loading...", {
+    duration: 10000,
+  })
 const toastError = (msg: string) => {
   toast.remove()
   toast.error(msg)
@@ -110,6 +113,8 @@ export const postPembelian = async (data: any) => {
       ...data,
       nota: imgStr,
     }
+
+    console.log(newPembelian, "ini new pembelian")
 
     // delete unnecesarry properties
     delete newPembelian.file

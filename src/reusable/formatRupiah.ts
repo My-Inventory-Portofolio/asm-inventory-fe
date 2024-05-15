@@ -3,5 +3,5 @@ export default function formatRupiah(number: number) {
     style: "currency",
     currency: "IDR",
   }).format(number)
-  return formattedNumber.slice(2, -3)
+  return number ? formattedNumber.slice(2, -3) : ""
 }
