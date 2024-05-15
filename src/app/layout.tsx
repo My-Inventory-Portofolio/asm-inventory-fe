@@ -6,6 +6,7 @@ import "@uploadthing/react/styles.css"
 import "../styles/globals.css"
 import type { Metadata } from "next"
 import { PrimeReactProvider } from "primereact/api"
+import { Toaster } from "react-hot-toast"
 
 export const metadata: Metadata = {
   title: "ASM Inventory",
@@ -26,7 +27,10 @@ export default function RootLayout({
             href="https://erp.sampurna-group.com/assets/layout/images/logo-white.png"
           />
         </head>
-        <body>{children}</body>
+        <body>
+          {children}
+          <Toaster />
+        </body>
       </html>
     </PrimeReactProvider>
   )

@@ -64,7 +64,7 @@ async function deleteImage(id: string) {
 export const deletePembelian = async (data: any) => {
   toastLoading()
   try {
-    if (role === "admin") {
+    if (data.role === "admin") {
       const tryDeleteImage = await deleteImage(data.imgId)
     }
     const response = await fetch(url, {
@@ -92,10 +92,11 @@ export const postPembelian = async (data: any) => {
   try {
     let imgStr = ""
     // handle upload image
-    if (role === "admin") {
+    if (data.role === "admin") {
       const imageData = new FormData()
       imageData.append("data_id", data.kode)
       imageData.append("foto", data.file)
+
       const imageUrl = await uploadImage(imageData)
       if (imageUrl) {
         imgStr += imageUrl
@@ -112,6 +113,8 @@ export const postPembelian = async (data: any) => {
 
     // delete unnecesarry properties
     delete newPembelian.file
+    delete newPembelian.role
+
     if (newPembelian.nota !== "") {
       const response = await fetch(url, {
         method: "POST",

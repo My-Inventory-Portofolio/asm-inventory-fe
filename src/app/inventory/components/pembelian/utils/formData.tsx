@@ -9,6 +9,7 @@ import { Tooltip } from "primereact/tooltip"
 import ErrorComp from "./errorComp"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { InputMask } from "primereact/inputmask"
+import Cookies from "js-cookie"
 
 type TTempFormData = {
   kode: string
@@ -39,6 +40,8 @@ export function FormDataPembelian({
     image: false,
   })
   const queryClient = useQueryClient()
+  const role = Cookies.get("role")
+
   // post mutation function
   const postPembelianMutation = useMutation({
     mutationFn: postPembelian,
@@ -78,6 +81,7 @@ export function FormDataPembelian({
       postPembelianMutation.mutate({
         ...formData,
         ["file"]: tempFile,
+        ["role"]: role,
       })
       setVisible(false)
     }

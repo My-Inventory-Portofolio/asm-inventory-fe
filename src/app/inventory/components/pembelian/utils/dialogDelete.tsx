@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteAssets } from "@/api/assets"
 import { deletePembelian } from "@/api/pembelian"
 import toast from "react-hot-toast"
+import Cookies from "js-cookie"
 
 const toastError = (msg: string) => {
   toast.remove()
@@ -19,6 +20,7 @@ export default function DialogDelete({
   selectedData,
 }: TDialogDelete) {
   const queryClient = useQueryClient()
+  const role = Cookies.get("role")
 
   // post mutation function
   const deletePembelianMutation = useMutation({
@@ -39,6 +41,7 @@ export default function DialogDelete({
       deletePembelianMutation.mutate({
         kode: selectedData.kode,
         imgId: selectedData.nota.split("|")[1],
+        role: role,
       })
     } else {
       toastError("token expired, please re-login")
