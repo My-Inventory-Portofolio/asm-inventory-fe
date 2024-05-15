@@ -29,8 +29,13 @@ export default function Login() {
 
   return (
     <Card
-      className="mx-auto my-auto shadow-8 border-round-3xl"
-      style={{ height: "350px", width: "350px" }}
+      className="shadow-8 border-round-3xl shadow-5"
+      style={{
+        height: "350px",
+        width: "350px",
+        background: "rgba(0,0,0,0.5)",
+        border: "2px solid white",
+      }}
     >
       <div className="flex flex-column align-items-center">
         <Image
@@ -53,6 +58,7 @@ export default function Login() {
             onChange={(e) => setPassword(e?.target?.value)}
           />
           <Button
+            className="bg-gray-700 border-none"
             label="Login"
             raised
             size="small"
