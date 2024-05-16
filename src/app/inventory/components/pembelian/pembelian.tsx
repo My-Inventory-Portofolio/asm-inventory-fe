@@ -199,7 +199,7 @@ export default function Pembelian() {
                     return (
                       <Button
                         style={{ fontSize: "12px", padding: "0" }}
-                        label={e.nota.split("|")[0]}
+                        label={e.nota.split("|")[0].substring(0, 4) + "..."}
                         link
                         onClick={() => {
                           setVisibleImageDialog(true)

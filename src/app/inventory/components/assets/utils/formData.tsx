@@ -72,10 +72,10 @@ export default function FormDataAssets({
         setThereIsNoAset(true)
       } else {
         postAssetsMutation.mutate(formData)
-        handleResetFormData()
         setVisible(false)
       }
     }
+    handleResetFormData()
     // hnalde reset
     setFormData(tempFormData)
   }

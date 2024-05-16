@@ -126,9 +126,10 @@ export default function Assets() {
         )
         setKeywordDataLength(keywordData.length)
       } else {
+        console.log(first)
         const tempTableData = asetData?.slice(
           first,
-          first === 0 ? rows : rows * (first + 1)
+          first === 0 ? rows : rows + first
         )
         setTableData(tempTableData)
         setKeywordDataLength(asetData.length)
