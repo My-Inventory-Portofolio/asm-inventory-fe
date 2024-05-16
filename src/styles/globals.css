@@ -44,6 +44,7 @@ body {
   position: relative;
   padding: 10px; /* Jarak di dalam border */
 }
+
 .boxed-content::after {
   content: "";
   position: absolute;
@@ -62,4 +63,11 @@ body {
   background-origin: border-box;
   background-clip: content-box, border-box;
   z-index: -2; /* Membuat pseudo-element berada di belakang semua */
+}
+
+/* datatable css  */
+.p-datatable .p-datatable-tbody > tr > td,
+.p-datatable .p-datatable-thead > tr > th {
+  padding: 0.5rem 0.5rem;
+  font-size: 12px;
 }

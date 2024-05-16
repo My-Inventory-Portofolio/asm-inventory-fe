@@ -198,6 +198,7 @@ export default function Pembelian() {
                   } else if (field === "nota") {
                     return (
                       <Button
+                        style={{ fontSize: "12px", padding: "0" }}
                         label={e.nota.split("|")[0]}
                         link
                         onClick={() => {
