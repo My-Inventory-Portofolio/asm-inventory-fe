@@ -8,6 +8,11 @@ const toastLoading = () =>
     duration: 10000,
   })
 
+const toastError = (msg: string) => {
+  toast.remove()
+  toast.error(msg)
+}
+
 // POST ASSET
 export const tryLogin = async (data: any) => {
   try {
@@ -21,10 +26,11 @@ export const tryLogin = async (data: any) => {
       body: JSON.stringify(data),
     })
     if (!response.ok) {
+      // toastError("Something when error, please login again")
       throw new Error("Network response was not ok")
     }
     return response.json()
   } catch (error) {
-    console.log("error")
+    toastError("Invalid username or password!")
   }
 }
