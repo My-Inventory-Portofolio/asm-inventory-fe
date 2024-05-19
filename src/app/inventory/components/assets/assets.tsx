@@ -7,9 +7,9 @@ import { Dialog } from "primereact/dialog"
 import { useEffect, useState } from "react"
 import FormDataAssets from "./utils/formData"
 import Image from "next/image"
-import Pagination from "./utils/pagination"
 import DialogDelete from "./utils/dialogDelete"
 import { InputText } from "primereact/inputtext"
+import Pagination from "@/reusable/pagination"
 
 type TAssetData = {
   keterangan: string

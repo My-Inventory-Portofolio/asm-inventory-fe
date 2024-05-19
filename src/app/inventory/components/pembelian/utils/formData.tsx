@@ -267,10 +267,18 @@ export function FormDataPembelian({
         </div>
       </div>
       <div className="flex justify-content-end gap-2">
-        <Button size="small" onClick={handleOnClose}>
+        <Button
+          size="small"
+          onClick={handleOnClose}
+          className="bg-red-400 border-none"
+        >
           Cancel
         </Button>
-        <Button size="small" onClick={handleOnSubmit}>
+        <Button
+          size="small"
+          onClick={handleOnSubmit}
+          className="bg-green-400 border-none"
+        >
           Submit
         </Button>
       </div>

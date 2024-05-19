@@ -60,7 +60,10 @@ export default function SideBar({
                   <ul className="list-none p-3 m-0">
                     <li>
                       <ul className="list-none p-0 m-0 overflow-hidden">
-                        <li onClick={() => handleActiveContent(0)}>
+                        <li
+                          onClick={() => handleActiveContent(0)}
+                          className="flex space-between"
+                        >
                           <a
                             className={`p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 ${
                               activeContent === 0
@@ -115,6 +118,21 @@ export default function SideBar({
                           >
                             <i className="pi pi-box mr-2"></i>
                             <span className="font-medium">Kartu Stok</span>
+                          </a>
+                        </li>
+                        <li
+                          onClick={() => handleActiveContent(4)}
+                          className="flex space-between"
+                        >
+                          <a
+                            className={`p-ripple flex align-items-center cursor-pointer p-3 border-round text-700 ${
+                              activeContent === 4
+                                ? "bg-blue-100"
+                                : "hover:surface-100"
+                            } transition-duration-150 transition-colors w-full`}
+                          >
+                            <i className="pi pi-exclamation-circle mr-2"></i>
+                            <span className="font-medium">Keluhan</span>
                           </a>
                         </li>
                       </ul>

@@ -11,7 +11,8 @@ import SideBar from "../../../utils/sidebar"
 import Assets from "./assets/assets"
 import Pembelian from "./pembelian/pembelian"
 import Catatan from "./catatan/catatan"
-import KartuStok from "./kartu_stok"
+import KartuStok from "./kartuStok/kartuStok"
+import Keluhan from "./keluhan/keluhan"
 
 import { useState, useLayoutEffect, useEffect } from "react"
 import Auth from "@/utils/auth"
@@ -46,12 +47,12 @@ export default function InventoryComp() {
               <Assets />
             ) : activeContent === 1 ? (
               <Pembelian />
-            ) : //
-            activeContent === 2 ? (
+            ) : activeContent === 2 ? (
               <Catatan />
-            ) : // <Catatan />
-            activeContent === 3 ? (
-              <></>
+            ) : activeContent === 3 ? (
+              <KartuStok />
+            ) : activeContent === 4 ? (
+              <Keluhan />
             ) : (
               // <KartuStok />
               <></>

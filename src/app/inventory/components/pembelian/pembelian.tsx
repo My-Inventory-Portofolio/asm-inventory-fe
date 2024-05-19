@@ -1,6 +1,5 @@
 import { getAllDataPembelian } from "@/api/pembelian"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import Pagination from "../assets/utils/pagination"
 import { useEffect, useState } from "react"
 import { InputText } from "primereact/inputtext"
 import { Button } from "primereact/button"
@@ -11,6 +10,7 @@ import { Dialog } from "primereact/dialog"
 import Image from "next/image"
 import { FormDataPembelian } from "./utils/formData"
 import DialogDelete from "./utils/dialogDelete"
+import Pagination from "@/reusable/pagination"
 
 type TPembelianData = {
   kode: string
@@ -199,6 +199,8 @@ export default function Pembelian() {
                     return (
                       <Button
                         style={{ fontSize: "12px", padding: "0" }}
+                        tooltip={e.nota}
+                        tooltipOptions={{ position: "bottom" }}
                         label={e.nota.split("|")[0].substring(0, 4) + "..."}
                         link
                         onClick={() => {
