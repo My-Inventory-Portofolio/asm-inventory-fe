@@ -1,6 +1,8 @@
 import toast from "react-hot-toast"
+import Cookies from "js-cookie"
 
 const url = "https://asm-inventory-be-phi.vercel.app/api/keluhan" // prod
+const token = Cookies.get("jwt")
 
 // toast
 const toastLoading = () => toast("Loading...")
@@ -31,6 +33,7 @@ export const deleteKeluhan = async (data: any) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token}`,
       },
       body: JSON.stringify(data),
     })
