@@ -1,6 +1,9 @@
+import { deleteKeluhan } from "@/api/keluhan"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Button } from "primereact/button"
 
 type TSelectedData = {
+  id: number
   extension: string
   email: string
   keluhan: string
@@ -12,6 +15,21 @@ type TDialogDone = {
 }
 
 export default function DialogDone({ setVisible, selectedData }: TDialogDone) {
+  const queryClient = useQueryClient()
+
+  // post mutation function
+  const deleteKeluhanMutation = useMutation({
+    mutationFn: deleteKeluhan,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["keluhan"] })
+    },
+  })
+
+  const handleOnSubmit = () => {
+    setVisible(false)
+    deleteKeluhanMutation.mutate({ id: selectedData?.id })
+  }
+
   return (
     selectedData && (
       <div className="h-5rem w-20rem flex justify-content-between flex-column">
@@ -28,7 +46,7 @@ export default function DialogDone({ setVisible, selectedData }: TDialogDone) {
             </Button>
             <Button
               size="small"
-              onClick={() => setVisible(false)}
+              onClick={handleOnSubmit}
               style={{ padding: "5px" }}
               className="bg-green-400 border-none"
             >

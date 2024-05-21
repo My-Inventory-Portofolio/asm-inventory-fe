@@ -6,8 +6,11 @@ import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { Dialog } from "primereact/dialog"
 import DialogDone from "./utils/DialogDone"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { getAllDataKeluhan } from "@/api/keluhan"
 
 type TSelectedData = {
+  id: number
   extension: string
   email: string
   keluhan: string
@@ -18,71 +21,24 @@ export default function Keluhan() {
   const [keyword, setKeyword] = useState("")
   const [visibleDialogDone, setVisibleDialogDone] = useState(false)
   const [selectedData, setSelectedData] = useState<TSelectedData>()
-
-  const [tableData, setTableData] = useState([
-    {
-      email: "ayun@gmail.com",
-      extension: "210",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ipeh@gmail.com",
-      extension: "217",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ipeh@gmail.com",
-      extension: "217",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ayun@gmail.com",
-      extension: "210",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ipeh@gmail.com",
-      extension: "217",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ipeh@gmail.com",
-      extension: "217",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ayun@gmail.com",
-      extension: "210",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ipeh@gmail.com",
-      extension: "217",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ipeh@gmail.com",
-      extension: "217",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ayun@gmail.com",
-      extension: "210",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ipeh@gmail.com",
-      extension: "217",
-      keluhan: "printer tidak bisa",
-    },
-    {
-      email: "ipeh@gmail.com",
-      extension: "217",
-      keluhan: "printer tidak bisa",
-    },
+  const queryClient = useQueryClient()
+  // query
+  const keluhanData: TSelectedData[] | undefined = queryClient.getQueryData([
+    "keluhan",
   ])
 
-  const handleOnClickDone = (e: any) => {
+  const handleRefreshBtn = () =>
+    queryClient.invalidateQueries({ queryKey: ["keluhan"] })
+
+  // Queries
+  useQuery({
+    queryKey: ["keluhan"],
+    queryFn: getAllDataKeluhan,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+  })
+
+  const handleOnClickCheckBtn = (e: any) => {
     setVisibleDialogDone(true)
     setSelectedData(e)
   }
@@ -103,6 +59,17 @@ export default function Keluhan() {
           className="flex align-items-center justify-content-end"
           style={{ width: "20%" }}
         >
+          <Button
+            icon="pi pi-refresh"
+            aria-label="Favorite"
+            size="small"
+            className="mr-2"
+            tooltip="Refresh Data"
+            tooltipOptions={{
+              position: "bottom",
+            }}
+            onClick={handleRefreshBtn}
+          />
           <InputText
             className="p-inputtext-sm"
             placeholder="search keyword"
@@ -121,59 +88,61 @@ export default function Keluhan() {
           overflow: "auto",
         }}
       >
-        {tableData.map((e, index) => (
-          <div
-            key={index}
-            className="border-round-2xl border-1 px-0 py-0"
-            style={{
-              height: "8rem",
-              display: "flex",
-              flexDirection: "column",
-              position: "relative",
-            }}
-          >
+        {keluhanData &&
+          keluhanData.map((e, index) => (
             <div
+              key={index}
+              className="border-round-2xl border-1 px-0 py-0"
               style={{
-                height: "80%",
-                borderRadius: "1rem 1rem 0 0",
+                height: "8rem",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "bold",
+                position: "relative",
               }}
             >
-              Extension
-              <div className="text-center">
-                <Button
-                  label={e.extension}
-                  link
-                  style={{
-                    fontSize: "2rem",
-                    padding: "10px 0 0 0",
-                  }}
-                  onClick={() => alert("hello there")}
-                />
-                <div className="text-xs">{e.email.split("@")[0]}</div>
+              <div
+                style={{
+                  height: "80%",
+                  borderRadius: "1rem 1rem 0 0",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: "bold",
+                }}
+              >
+                Extension
+                <div className="text-center">
+                  <Button
+                    label={e.extension}
+                    link
+                    style={{
+                      fontSize: "2rem",
+                      padding: "10px 0 0 0",
+                    }}
+                    tooltip={`task/problem:\n${e.keluhan}`}
+                    tooltipOptions={{ position: "bottom" }}
+                  />
+                  <div className="text-xs">{e.email.split("@")[0]}</div>
+                </div>
               </div>
+              <Button
+                size="small"
+                style={{
+                  padding: "5px",
+                  position: "absolute",
+                  right: "5px",
+                  bottom: "5px",
+                }}
+                onClick={() => handleOnClickCheckBtn(e)}
+                rounded
+                text
+                aria-label="Filter"
+              >
+                <i className="pi pi-check" style={{ fontSize: "0.8rem" }}></i>
+              </Button>
             </div>
-            <Button
-              size="small"
-              style={{
-                padding: "5px",
-                position: "absolute",
-                right: "5px",
-                bottom: "5px",
-              }}
-              onClick={() => handleOnClickDone(e)}
-              rounded
-              text
-              aria-label="Filter"
-            >
-              <i className="pi pi-check" style={{ fontSize: "0.8rem" }}></i>
-            </Button>
-          </div>
-        ))}
+          ))}
       </div>
       <Dialog
         header={`${selectedData?.extension}-${
