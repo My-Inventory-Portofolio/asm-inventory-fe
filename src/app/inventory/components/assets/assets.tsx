@@ -81,6 +81,12 @@ export default function Assets() {
     </div>
   )
 
+  // handle refetch data
+  const handleRefreshBtn = () => {
+    queryClient.invalidateQueries({ queryKey: ["assets"] })
+  }
+
+  // handle reset
   const handleResetFormData = (): void => {
     setFlagEdit(false)
     setTempFormData({
@@ -177,18 +183,30 @@ export default function Assets() {
           className="flex align-items-center justify-content-end"
           style={{ width: "20%" }}
         >
-          <InputText
-            className="p-inputtext-sm mr-2"
-            placeholder="search keyword"
-            value={keyword}
-            onChange={(e: any) => setKeyword(e?.target?.value)}
+          <Button
+            icon="pi pi-refresh"
+            aria-label="Favorite"
+            size="small"
+            className="mr-2"
+            tooltip="Refresh Data"
+            tooltipOptions={{
+              position: "bottom",
+            }}
+            onClick={handleRefreshBtn}
           />
           <Button
             icon="pi pi-plus"
             size="small"
             tooltip="Tambah Aset"
+            className="mr-2"
             tooltipOptions={{ position: "bottom" }}
             onClick={() => setVisibleFormData(true)}
+          />
+          <InputText
+            className="p-inputtext-sm"
+            placeholder="search keyword"
+            value={keyword}
+            onChange={(e: any) => setKeyword(e?.target?.value)}
           />
         </div>
       </div>

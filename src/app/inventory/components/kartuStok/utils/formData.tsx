@@ -4,7 +4,7 @@ import { Button } from "primereact/button"
 import { InputText } from "primereact/inputtext"
 import { useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { editAssets, postAssets } from "@/api/assets"
+import { editAssets } from "@/api/assets"
 import { InputMask } from "primereact/inputmask"
 import ErrorComp from "@/reusable/errorComp"
 
@@ -26,14 +26,12 @@ type TTempFormData = {
 type TFormData = {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   tempFormData: TTempFormData
-  flagEdit: boolean
   handleResetFormData: () => void
 }
 
-export default function FormDataAssets({
+export default function FormDataKartuStok({
   setVisible,
   tempFormData,
-  flagEdit,
   handleResetFormData,
 }: TFormData) {
   const queryClient = useQueryClient()
@@ -46,15 +44,6 @@ export default function FormDataAssets({
     handleResetFormData()
   }
 
-  // post mutation function
-  const postAssetsMutation = useMutation({
-    mutationFn: postAssets,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["assets"] })
-      queryClient.invalidateQueries({ queryKey: ["kartu_stok"] })
-    },
-  })
-
   // edit mutation function
   const editAssetsMutation = useMutation({
     mutationFn: editAssets,
@@ -66,19 +55,9 @@ export default function FormDataAssets({
 
   // handle submit new todo
   const handleOnSubmit = (): void => {
-    if (flagEdit) {
-      editAssetsMutation.mutate(formData)
-      setVisible(false)
-    } else if (flagEdit === false) {
-      if (!formData.no_aset) {
-        setThereIsNoAset(true)
-      } else {
-        postAssetsMutation.mutate(formData)
-        setVisible(false)
-      }
-    }
+    editAssetsMutation.mutate(formData)
+    setVisible(false)
     handleResetFormData()
-    // hnalde reset
     setFormData(tempFormData)
   }
 
@@ -105,7 +84,7 @@ export default function FormDataAssets({
               name="no_aset"
               type="text"
               className="p-inputtext-sm mt-1 w-full w-full"
-              disabled={flagEdit}
+              disabled={true}
               onChange={(e) => handleOnChange(e)}
             />
             {thereIsNoAset && ErrorComp("No aset tidak boleh kosong")}

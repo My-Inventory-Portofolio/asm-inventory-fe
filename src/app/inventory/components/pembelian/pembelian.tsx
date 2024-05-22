@@ -157,18 +157,19 @@ export default function Pembelian() {
           className="flex align-items-center justify-content-end"
           style={{ width: "20%" }}
         >
-          <InputText
-            className="p-inputtext-sm mr-2"
-            placeholder="search keyword"
-            value={keyword}
-            onChange={(e: any) => setKeyword(e?.target?.value)}
-          />
           <Button
             icon="pi pi-plus"
             size="small"
             tooltip="Tambah Pembelian"
+            className="mr-2"
             tooltipOptions={{ position: "bottom" }}
             onClick={() => setVisibleFormData(true)}
+          />
+          <InputText
+            className="p-inputtext-sm"
+            placeholder="search keyword"
+            value={keyword}
+            onChange={(e: any) => setKeyword(e?.target?.value)}
           />
         </div>
       </div>
