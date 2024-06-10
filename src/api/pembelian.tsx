@@ -36,6 +36,7 @@ async function uploadImage(imageData: any) {
         "https://firebase-upload-api.vercel.app/upload-multiple",
         {
           method: "POST",
+          mode: "cors",
           body: newFormData,
         }
       )
