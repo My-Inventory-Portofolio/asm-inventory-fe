@@ -35,7 +35,7 @@ export default function InventoryComp() {
             <NavBar visible={visible} setVisible={setVisible} />
             {/* sidebar  */}
             <SideBar
-              visible={visible}
+              visible={visible} // true or false
               setVisible={setVisible}
               activeContent={activeContent}
               setActiveContent={setActiveContent}
@@ -43,6 +43,7 @@ export default function InventoryComp() {
           </div>
           {/* CONTENT  */}
           <div className="bg-white border-round-md w-full py-2 mt-5 h-full">
+            {/* kondisi  */}
             {activeContent === 0 ? (
               <Assets />
             ) : activeContent === 1 ? (

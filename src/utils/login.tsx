@@ -10,19 +10,28 @@ import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
 import "../styles/index.module.css"
 
+// component
 export default function Login() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("") // username
+  const [password, setPassword] = useState("") // password
   const router = useRouter()
 
+  // FUNCTION HANDLE SUBMIT LOGIN
   const handleSubmit = async () => {
+    // HASIL DARI LOGIN//
     const res = await tryLogin({ username, password })
+
+    // jika benar, maka
     if (res) {
       const token = res.token
       const payloadBase64 = token.split(".")[1]
       const payload = JSON.parse(atob(payloadBase64))
+      console.log(payload)
       if (payload) {
+        // cookies set
         Cookies.set("jwt", token)
+
+        // redirect
         router.push("/inventory")
       }
     }
@@ -45,18 +54,23 @@ export default function Login() {
           height={70}
         />
         <div className="w-11 gap-3 flex flex-column mt-5">
+          {/* USERNAME  */}
           <InputText
             type="text"
             className="p-inputtext-sm"
             placeholder="username"
             onChange={(e) => setUsername(e?.target?.value)}
           />
+
+          {/* PASSWORD  */}
           <InputText
             type="password"
             className="p-inputtext-sm"
             placeholder="password"
             onChange={(e) => setPassword(e?.target?.value)}
           />
+
+          {/* BUTTON SUBMIT  */}
           <Button
             className="bg-gray-700 border-none"
             label="Login"

@@ -13,6 +13,8 @@ const toastSuccess = (msg: string) => {
 
 function Auth({ children }: any) {
   const queryClient = useQueryClient()
+
+  // authorized, false
   const [authorized, setAuthorized] = useState(false)
 
   useLayoutEffect(() => {

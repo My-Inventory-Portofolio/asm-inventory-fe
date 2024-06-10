@@ -42,13 +42,25 @@ export default function Pembelian() {
   // delete dialog state
   const [visibleDialogDelete, setVisibleDialogDelete] = useState<boolean>(false)
 
+  //
   const [selectedData, setSelectedData] = useState<TPembelianData>()
+
+  // temp image, preview temp
   const [tempImg, setTempImg] = useState<string>("")
+
+  //
   const [flagEdit, setFlagEdit] = useState<boolean>(false)
+
+  //
   const [keywordDataLength, setKeywordDataLength] = useState(0)
+
+  // keyword searching
   const [keyword, setKeyword] = useState<string>("")
+
+  //
   const [tableData, setTableData] = useState<TPembelianData[]>([])
 
+  // temp form create
   const [tempFormData, setTempFormData] = useState<TPembelianData>({
     kode: "",
     jenis: "",
@@ -106,9 +118,11 @@ export default function Pembelian() {
             .toLowerCase()
             .includes(keyword.toLowerCase())
         )
+
         setTableData(
           keywordData.slice(first, first === 0 ? rows : rows * (first + 1))
         )
+
         setKeywordDataLength(keywordData.length)
       } else {
         const tempTableData = pembelianData?.slice(
@@ -120,6 +134,8 @@ export default function Pembelian() {
       }
     }
   }, [first, rows, pembelianData, keyword])
+
+  console.log(first, rows, "test")
 
   const columnTable = [
     { field: "kode", header: "Kode" },

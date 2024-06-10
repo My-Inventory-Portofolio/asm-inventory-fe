@@ -128,7 +128,8 @@ export default function Assets() {
             .includes(keyword.toLowerCase())
         )
         setTableData(
-          keywordData.slice(first, first === 0 ? rows : rows * (first + 1))
+          keywordData.slice(first, first === 0 ? rows : rows + first)
+          // keywordData.slice(first, first === 0 ? rows : 10)
         )
         setKeywordDataLength(keywordData.length)
       } else {
