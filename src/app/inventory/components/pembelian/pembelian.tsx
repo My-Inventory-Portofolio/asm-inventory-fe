@@ -46,7 +46,7 @@ export default function Pembelian() {
   const [selectedData, setSelectedData] = useState<TPembelianData>()
 
   // temp image, preview temp
-  const [tempImg, setTempImg] = useState<string>("")
+  const [tempImg, setTempImg] = useState<string[]>([])
 
   //
   const [flagEdit, setFlagEdit] = useState<boolean>(false)
@@ -135,8 +135,6 @@ export default function Pembelian() {
     }
   }, [first, rows, pembelianData, keyword])
 
-  console.log(first, rows, "test")
-
   const columnTable = [
     { field: "kode", header: "Kode" },
     { field: "jenis", header: "Jenis" },
@@ -216,13 +214,12 @@ export default function Pembelian() {
                     return (
                       <Button
                         style={{ fontSize: "12px", padding: "0" }}
-                        tooltip={e.nota}
-                        tooltipOptions={{ position: "bottom" }}
-                        label={e.nota.split("|")[0].substring(0, 4) + "..."}
+                        label={"view image"}
                         link
                         onClick={() => {
+                          setTempImg(e.nota.split("|"))
                           setVisibleImageDialog(true)
-                          setTempImg(e.nota.split("|")[0])
+                          // setTempImg(e.nota.split("|")[0])
                         }}
                       />
                     )
@@ -280,14 +277,19 @@ export default function Pembelian() {
         onHide={() => setVisibleImageDialog(false)}
       >
         <div
-          className="flex align-items-center relative"
+          className="flex align-items-center relative flex-col"
           style={{ height: "500px", width: "700px" }}
         >
-          <img
-            alt={"img-viewer"}
-            src={`https://storage-api.online/img/public/images/${tempImg}`}
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
-          />
+          {tempImg?.map((e: string, i: number) => (
+            <img
+              key={i}
+              alt={"img-viewer"}
+              src={`https://firebasestorage.googleapis.com/v0/b/fir-upload-b7a9b.appspot.com/o/images%2F${
+                e.split("/")[1]
+              }?alt=media&token=1ab24b2b-2ecb-4ec3-ba6e-b21fe5178acb`}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
+          ))}
         </div>
       </Dialog>
       {/* delete dialog  */}

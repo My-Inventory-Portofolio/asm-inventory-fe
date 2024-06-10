@@ -18,6 +18,7 @@ function Auth({ children }: any) {
   const [authorized, setAuthorized] = useState(false)
 
   useLayoutEffect(() => {
+    // ngambil token
     const isAuthenticated = Cookies.get("jwt")
     if (!isAuthenticated) {
       redirect("/")
@@ -26,10 +27,14 @@ function Auth({ children }: any) {
       toastSuccess("Berhasil login")
       const payloadBase64 = isAuthenticated.split(".")[1]
       const payload = JSON.parse(atob(payloadBase64))
+      // jika ada username dan
       if (payload?.username && authorized === false) {
         queryClient.setQueryData(["users"], payload)
+        // set username dan role
         Cookies.set("username", payload.username)
         Cookies.set("role", payload.role)
+
+        //
         setAuthorized(true)
       }
     }

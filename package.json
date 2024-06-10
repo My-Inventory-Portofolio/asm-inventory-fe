@@ -28,6 +28,7 @@
     "react-hot-toast": "^2.4.1",
     "react-query": "^3.39.3",
     "react-transition-group": "^4.4.5",
+    "swiper": "^11.1.4",
     "typescript": "5.2.2",
     "uploadthing": "^6.10.3"
   },

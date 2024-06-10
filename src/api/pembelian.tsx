@@ -5,12 +5,11 @@ const url = "https://asm-inventory-be-phi.vercel.app/api/pembelian" // prod
 // const url = "http://localhost:8080/api/pembelian" // develop
 
 const token = Cookies.get("jwt")
-const role = Cookies.get("role")
 
 // toast
 const toastLoading = () =>
   toast("Loading...", {
-    duration: 10000,
+    duration: 30000,
   })
 const toastError = (msg: string) => {
   toast.remove()
@@ -27,49 +26,37 @@ export const getAllDataPembelian = async () => {
 }
 
 async function uploadImage(imageData: any) {
+  // handle add new form data
+  const newFormData: any = new FormData()
+  imageData.map((e: any) => newFormData.append("images", e))
+
   try {
-    // Lakukan pengiriman gambar ke API penyimpanan gambar
-    const response = await fetch(
-      "https://storage-api.online/img/public/api/data/add",
-      {
-        method: "POST",
-        body: imageData,
+    if (newFormData) {
+      const response = await fetch(
+        "https://firebase-upload-api.vercel.app/upload-multiple",
+        {
+          method: "POST",
+          body: newFormData,
+        }
+      )
+      // Periksa status respons
+      if (!response.ok) {
+        throw new Error("Gagal mengunggah gambar")
       }
-    )
-
-    // Periksa status respons
-    if (!response.ok) {
-      throw new Error("Gagal mengunggah gambar")
+      // Ambil URL gambar dari respons
+      const imageUrl = await response.json()
+      return imageUrl
     }
-
-    // Ambil URL gambar dari respons
-    const imageUrl = await response.json()
-    return `${imageUrl.data.foto}|${imageUrl.data.id}`
   } catch (error) {
+    toastError("gagal fetch image")
     console.error("Error saat mengunggah gambar:", error)
     throw error
-  }
-}
-
-async function deleteImage(id: string) {
-  try {
-    const response = await fetch(
-      "https://storage-api.online/img/public/api/data/delete/" + id,
-      {
-        method: "DELETE",
-      }
-    )
-  } catch (error) {
-    toastError("Gagal delete image")
   }
 }
 
 export const deletePembelian = async (data: any) => {
   toastLoading()
   try {
-    if (data.role === "admin") {
-      const tryDeleteImage = await deleteImage(data.imgId)
-    }
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -96,13 +83,9 @@ export const postPembelian = async (data: any) => {
     let imgStr = ""
     // handle upload image
     if (data.role === "admin") {
-      const imageData = new FormData()
-      imageData.append("data_id", data.kode)
-      imageData.append("foto", data.file)
-
-      const imageUrl = await uploadImage(imageData)
+      const imageUrl: any = await uploadImage(data.file)
       if (imageUrl) {
-        imgStr += imageUrl
+        imgStr += imageUrl.imageNames.join("|")
       }
     } else {
       imgStr += "-"
@@ -113,8 +96,6 @@ export const postPembelian = async (data: any) => {
       ...data,
       nota: imgStr,
     }
-
-    console.log(newPembelian, "ini new pembelian")
 
     // delete unnecesarry properties
     delete newPembelian.file

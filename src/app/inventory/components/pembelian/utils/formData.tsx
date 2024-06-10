@@ -74,7 +74,6 @@ export function FormDataPembelian({
       newErrMsg["image"] = true
       flag = true
     }
-
     if (flag) {
       setErrMsg(newErrMsg)
     } else {
@@ -116,6 +115,14 @@ export function FormDataPembelian({
 
   const itemTemplate = (inFile: object, props: ItemTemplateOptions) => {
     const file: any = inFile as File
+
+    const handleRemoveTempFile = (index: number) => {
+      let newTempFile = tempFile
+      newTempFile[index] = null
+      newTempFile = newTempFile.filter((_: any) => _ !== null)
+      setTempFile(newTempFile)
+    }
+
     return (
       <div
         className="flex align-items-center relative"
@@ -133,7 +140,7 @@ export function FormDataPembelian({
           className="p-button-rounded p-button-danger absolute top-0 right-0"
           onClick={() => {
             onTemplateRemove(file, props.onRemove)
-            setTempFile([])
+            handleRemoveTempFile(props.index)
           }}
         />
       </div>
@@ -243,6 +250,7 @@ export function FormDataPembelian({
 
             <FileUpload
               // style={{ height: "500px" }}
+              multiple
               name="demo[]"
               url={"/api/upload"}
               accept="image/*"
@@ -254,7 +262,7 @@ export function FormDataPembelian({
               headerTemplate={headerTemplate}
               onClear={() => setTempFile([])}
               onSelect={(e) => {
-                setTempFile(e.files[0])
+                setTempFile(e.files)
                 setErrMsg({ ...errMsg, ["image"]: false })
               }}
               chooseLabel="Pilih Nota"
