@@ -2,6 +2,7 @@ import { Sidebar } from "primereact/sidebar"
 import { Button } from "primereact/button"
 import { Avatar } from "primereact/avatar"
 import Cookies from "js-cookie"
+import { useRouter } from "next/navigation"
 
 type VisibleType = {
   visible: boolean
@@ -20,8 +21,15 @@ export default function SideBar({
     setVisible(false)
     setActiveContent(contentNum)
   }
-
+  const router = useRouter()
   const username = Cookies.get("username")
+
+  const handleLogoutBtn = () => {
+    Cookies.remove("jwt")
+    Cookies.remove("role")
+    Cookies.remove("username")
+    router.push("/")
+  }
 
   return (
     <div className="card flex justify-content-center">
@@ -150,6 +158,7 @@ export default function SideBar({
                       <span className="font-bold ml-2">{username}</span>
                     </div>
                     <Button
+                      onClick={handleLogoutBtn}
                       icon="pi pi-sign-out"
                       rounded
                       text

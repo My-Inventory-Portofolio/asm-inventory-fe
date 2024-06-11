@@ -26,31 +26,26 @@ export const getAllDataPembelian = async () => {
 }
 
 async function uploadImage(imageData: any) {
-  // handle add new form data
-  const newFormData: any = new FormData()
-  imageData.map((e: any) => newFormData.append("images", e))
+  const newFormData = new FormData()
+  imageData.forEach((e: any) => newFormData.append("images", e))
 
   try {
-    if (newFormData) {
-      const response = await fetch(
-        "https://firebase-upload-api.vercel.app/upload-multiple",
-        {
-          method: "POST",
-          mode: "cors",
-          body: newFormData,
-        }
-      )
-      // Periksa status respons
-      if (!response.ok) {
-        throw new Error("Gagal mengunggah gambar")
+    const response = await fetch(
+      "https://firebase-upload-api.vercel.app/upload-multiple",
+      {
+        method: "POST",
+        body: newFormData,
       }
-      // Ambil URL gambar dari respons
-      const imageUrl = await response.json()
-      return imageUrl
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to upload images: ${response.statusText}`)
     }
+
+    const imageUrl = await response.json()
+    return imageUrl
   } catch (error) {
-    toastError("gagal fetch image")
-    console.error("Error saat mengunggah gambar:", error)
+    toastError("Gagal mengunggah gambar")
     throw error
   }
 }

@@ -1,9 +1,6 @@
 import { useState } from "react"
-import Pagination from "../assets/utils/pagination"
 import { InputText } from "primereact/inputtext"
 import { Button } from "primereact/button"
-import { DataTable } from "primereact/datatable"
-import { Column } from "primereact/column"
 import { Dialog } from "primereact/dialog"
 import DialogDone from "./utils/DialogDone"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
@@ -72,7 +69,8 @@ export default function Keluhan() {
           />
           <InputText
             className="p-inputtext-sm"
-            placeholder="search keyword"
+            placeholder="still udner development"
+            disabled
             value={keyword}
             onChange={(e: any) => setKeyword(e?.target?.value)}
           />

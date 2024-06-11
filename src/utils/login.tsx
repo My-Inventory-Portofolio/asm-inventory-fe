@@ -26,11 +26,9 @@ export default function Login() {
       const token = res.token
       const payloadBase64 = token.split(".")[1]
       const payload = JSON.parse(atob(payloadBase64))
-      console.log(payload)
       if (payload) {
         // cookies set
         Cookies.set("jwt", token)
-
         // redirect
         router.push("/inventory")
       }

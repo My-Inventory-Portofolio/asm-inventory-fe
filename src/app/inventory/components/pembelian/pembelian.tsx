@@ -11,6 +11,7 @@ import Image from "next/image"
 import { FormDataPembelian } from "./utils/formData"
 import DialogDelete from "./utils/dialogDelete"
 import Pagination from "@/reusable/pagination"
+import toast from "react-hot-toast"
 
 type TPembelianData = {
   kode: string
@@ -102,6 +103,12 @@ export default function Pembelian() {
       />
     </div>
   )
+
+  const handleBtnEdit = () => {
+    toast("Under Development", {
+      icon: "⚠️",
+    })
+  }
 
   // handle delete btn
   const handleDeleteColumn = (e: TPembelianData) => {
@@ -237,7 +244,7 @@ export default function Pembelian() {
                   icon="pi pi-pencil"
                   text
                   severity="info"
-                  // onClick={() => handleEditColumn(e)}
+                  onClick={handleBtnEdit}
                 />
               )}
             />
@@ -277,8 +284,8 @@ export default function Pembelian() {
         onHide={() => setVisibleImageDialog(false)}
       >
         <div
-          className="flex align-items-center relative flex-col"
-          style={{ height: "500px", width: "700px" }}
+          className="flex align-items-center relative flex-col overflow-auto"
+          style={{ height: "500px", width: "700px", gap: "10px" }}
         >
           {tempImg?.map((e: string, i: number) => (
             <img
