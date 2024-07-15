@@ -1,5 +1,6 @@
 import toast from "react-hot-toast"
 import Cookies from "js-cookie"
+import ValidDate from "@/reusable/validDate"
 
 const url = "https://asm-inventory-be-phi.vercel.app/api/pembelian" // prod
 // const url = "http://localhost:8080/api/pembelian" // develop
@@ -11,10 +12,12 @@ const toastLoading = () =>
   toast("Loading...", {
     duration: 30000,
   })
+
 const toastError = (msg: string) => {
   toast.remove()
   toast.error(msg)
 }
+
 const toastSuccess = (msg: string) => {
   toast.remove()
   toast.success(msg)
@@ -75,13 +78,21 @@ export const deletePembelian = async (data: any) => {
 
 export const postPembelian = async (data: any) => {
   toastLoading()
+  const currentDate = new Date().getTime()
+  const inputDate = ValidDate(data.tgl_beli)
+
   try {
     let imgStr = ""
     // handle upload image
     if (data.role === "admin") {
-      const imageUrl: any = await uploadImage(data.file)
-      if (imageUrl) {
-        imgStr += imageUrl.imageNames.join("|")
+      if (currentDate >= inputDate) {
+        const imageUrl: any = await uploadImage(data.file)
+        if (imageUrl) {
+          imgStr += imageUrl.imageNames.join("|")
+        }
+      } else {
+        toastError("invalid date")
+        return
       }
     } else {
       imgStr += "-"

@@ -13,17 +13,20 @@ type TSelectedData = {
   keluhan: string
 }
 
+// function keluhan
 export default function Keluhan() {
   // pagination state
   const [keyword, setKeyword] = useState("")
   const [visibleDialogDone, setVisibleDialogDone] = useState(false)
   const [selectedData, setSelectedData] = useState<TSelectedData>()
   const queryClient = useQueryClient()
-  // query
+
+  // state keluhan data
   const keluhanData: TSelectedData[] | undefined = queryClient.getQueryData([
     "keluhan",
   ])
 
+  // function refresh button
   const handleRefreshBtn = () =>
     queryClient.invalidateQueries({ queryKey: ["keluhan"] })
 

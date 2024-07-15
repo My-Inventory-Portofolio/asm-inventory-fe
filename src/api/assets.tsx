@@ -1,5 +1,6 @@
 import toast from "react-hot-toast"
 import Cookies from "js-cookie"
+import ValidDate from "@/reusable/validDate"
 
 const url = "https://asm-inventory-be-phi.vercel.app/api/assets" // prod
 const token = Cookies.get("jwt")
@@ -28,22 +29,27 @@ export const getAllDataAssets = async () => {
 // POST ASSET
 export const postAssets = async (data: any) => {
   toastLoading()
+  const currentDate = new Date().getTime()
+  const tglCheck = data.tgl_check.split("-").reverse().join("/")
   try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${token}`,
-      },
-      body: JSON.stringify(data),
-    })
-    const res = await response.json()
-    console.log(res, "ini res")
+    if (currentDate >= tglCheck) {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify(data),
+      })
+      const res = await response.json()
 
-    if (!response.ok) {
-      toastError(res.message)
+      if (!response.ok) {
+        toastError(res.message)
+      } else {
+        toastSuccess(res.message)
+      }
     } else {
-      toastSuccess(res.message)
+      toastError("invalid date")
     }
   } catch (error) {
     console.log(`err:${error}`)
